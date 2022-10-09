@@ -23,6 +23,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -33,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import band.effective.marvelapp.data.getImages
 import band.effective.marvelapp.ui.theme.MarvelAppTheme
+import band.effective.marvelapp.ui.theme.backgroundColor
 import band.effective.marvelapp.ui.theme.backgroundTriangleColors
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.SnapOffsets
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainApp("Android")
+                    MainApp()
                 }
             }
         }
@@ -74,10 +76,10 @@ fun DrawTriangle(color: MutableState<Color>) {
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun MainApp(name: String) {
+fun MainApp() {
     Box(
         modifier = Modifier
-            .background(color = Color(0xFF2A272B))
+            .background(color = backgroundColor)
     ) {
         val mutableStateOfTriangle = mutableStateOf(backgroundTriangleColors[0])
         DrawTriangle(color = mutableStateOfTriangle)
@@ -108,6 +110,7 @@ fun MainApp(name: String) {
     }
 }
 
+@Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
 fun Heroes(mutableStateOfTriangle: MutableState<Color>) {
@@ -139,10 +142,11 @@ fun Heroes(mutableStateOfTriangle: MutableState<Color>) {
             Card(
                 modifier = Modifier
                     .padding(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 31.dp)
-                    .fillMaxSize(0.97f),
+                    .fillMaxSize(0.97f)
+                    .shadow(elevation = 10.dp),
                 shape = RoundedCornerShape(14.dp)
             ) {
-                Box() {
+                Box {
                     Image(
                         modifier = Modifier
                             .fillMaxSize()
@@ -175,6 +179,6 @@ fun Heroes(mutableStateOfTriangle: MutableState<Color>) {
 @Composable
 fun DefaultPreview() {
     MarvelAppTheme {
-        MainApp("Android")
+        MainApp()
     }
 }
